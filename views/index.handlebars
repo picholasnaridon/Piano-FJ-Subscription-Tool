@@ -1,0 +1,58 @@
+<div class="jumbotron" style="text-align: center">
+  <img src="http://www.profarmer.com/sites/default/files/pro-farmer-logo-no-bg.png" alt="">
+  <h2>Create Subscription</h2>
+</div>
+
+
+<form action="" method="" style="margin: 5%">
+  <h4>Add Subscription</h4>
+
+
+  <div class="form-group" style="">
+    <label for="userId">User ID</label>
+    <input type="text" class="form-control form-control-lg" id="user_id" aria-describedby="emailHelp" placeholder="User ID" required>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleSelect2">Select a Term(s)</label>
+    <select class="form-control form-control-lg" id="termSelect">
+      {{#each terms }}
+      <option value="{{this.term_id}}" {{#selected}}selected="selected" {{/selected}}>
+        {{this.name}} // Term: {{this.term_id}} // Resource: {{this.resource.rid}} // Access Period (Days): {{this.custom_default_access_period}}
+      </option>
+      {{/each}}
+    </select>
+    <br>
+    <button type="submit" class="btn btn-primary btn-lg" id="addTerm">Submit</button>
+</form>
+
+<script>
+
+  $('#addTerm').click(function (e) {
+    e.preventDefault()
+
+    var data = {
+      user_id: $('#user_id').val(),
+      term_id: $('#termSelect option:selected').val()
+    }
+    if (data.user_id == "") {
+      alert("enter User id")
+    } else {
+
+      $.ajax({
+        url: "/",
+        data: data,
+        method: "post",
+        success: function (res) {
+          alert(res)
+        },
+        error: function (textStatus, err) {
+          alert(err)
+        }
+      })
+    }
+
+
+  })
+
+</script>
