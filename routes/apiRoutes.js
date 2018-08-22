@@ -7,6 +7,7 @@ router.get('/', function (req, res) {
   var terms = []
   var url = `https://sandbox.tinypass.com/api/v3/publisher/term/list?aid=${process.env.PIANO_AID}&api_token=${process.env.PIANO_API_TOKEN}`
   request(url, function (error, response, body) {
+    if (error) res.render("index")
     var data = JSON.parse(response.body)
     var termData = data.terms
 
